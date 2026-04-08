@@ -83,7 +83,7 @@ These metrics translate the inferred latent intent into interpretable measures o
 
 > **[PLACEHOLDER: Mathematical Deep Dive]**
 > *Future addition:
-  > Mathematical expressions 
+  > Mathematical expressions; 
   > Link to Jupyter Notebook / LaTeX PDF*
 
 ---
