@@ -15,13 +15,13 @@ While intent is central to how pitching is taught and evaluated, it remains an u
 The system is designed to handle high-volume, pitch-level **Statcast** data (~7.4 million pitches from 2015 to 2025) using a local OLAP architecture.
 
 ### Data Architecture
-* **Sources:** Statcast pitch-level data via `pybaseball`, supplemented MLB API metadata.
+* **Sources:** Statcast pitch-level data via `pybaseball`, supplemented with MLB API metadata.
 * **Storage:** **Apache Parquet** with Hive-style partitioning (`/year=/month=/`). 
 * **Database/Query Engine:** **DuckDB** for direct SQL queries on Parquet files.
 
 
 ### ETL Scripts
-* `download_statcast.py`: ingestiong and cleaning.
+* `download_statcast.py`: ingestion and cleaning.
 * `download_mlbapi.py`: metadata enrichment.
 * `db.py`: schema definition and query utilities.
 
@@ -30,7 +30,7 @@ The system is designed to handle high-volume, pitch-level **Statcast** data (~7.
 
 
 ### Overall Script Features 
-* **Columnar storage** with Parquet to enable efficient queries by readign only required columns.
+* **Columnar storage** (Parquet) to enable efficient queries by reading only required columns.
 * **Partitioning** (year/month) reduces data scanned via partition pruning.
 * **Logging** supports pipeline monitoring and debugging 
 
@@ -42,7 +42,7 @@ The system is designed to handle high-volume, pitch-level **Statcast** data (~7.
 ### 1. Problem Framing 
 *outline*
 - pitch intent as latent variable
-- decomposition into strategy, execution, and randeomness or uncontrollable factors
+- decomposition into strategy, execution, and randomness or uncontrollable factors
 
 ### 2. Data Preparation and EDA
 *outline*
@@ -64,14 +64,14 @@ The system is designed to handle high-volume, pitch-level **Statcast** data (~7.
     - game state
     - pitcher-specific tendencies if exists 
   - likelihood: the observed pitch location (`plate_x` and `plate_z`) is modeled as a noisy realization around the latent intended location $\theta_i$ where the variance reflects pitcher-specific execution error or command variability 
-  - posterior: the inferred distribution of intent location of a pitch after combining the context-based prior with the observed pitch location through likelihood
+  - posterior: the inferred distribution of intended pitch location after combining the context-based prior with the observed pitch location through likelihood
 - using posterior to decompose
   - strategy: assessed by whether the inferred intent location aligns with historically favourable target zones given the context
   - execution: assessed by the deviation between observed location and inferred intent
   - randomness/uncontrollable factors: assessed by the difference between pitch quality and eventual outcome, after accounting for inferred intent and execution 
 
 ### 4. Evaluation Metrics 
-Metrics translate the inferred latent intent into interpretatble measures of pitcher command, decision making, and possible outcome variability. 
+These metrics translate the inferred latent intent into interpretable measures of pitcher command, decision making, and possible outcome variability. 
 *outline; proposed metrics* 
 - execution metrics
   - execution error (per pitch): euclidean distance between observed location and inferred intent
